@@ -1,8 +1,35 @@
 // Defining text characters for the empty and full hearts for you to use later.
-const EMPTY_HEART = '♡'
-const FULL_HEART = '♥'
+const EMPTY_HEART = '♡';
+const FULL_HEART = '♥';
 
 // Your JavaScript code goes here!
+
+const heartEmojis = document.querySelectorAll('.like-glyph');
+heartEmojis.forEach(heartEmoji => {
+  heartEmoji.addEventListener('click', e => {
+    mimicServerCall()
+    .then(() => {
+      if (heartEmoji.textContent === EMPTY_HEART) {
+        heartEmoji.textContent = FULL_HEART;
+        heartEmoji.classList.add('activated-heart');
+      } else {
+        heartEmoji.textContent = EMPTY_HEART;
+        heartEmoji.classList.remove('activated-heart');
+      }
+    })
+    .catch(error => {
+      const errorModal = document.getElementById('modal');
+      const errorMessage = document.getElementById('modal-message');
+        console.log(error);
+      errorModal.classList.remove('hidden');
+      errorMessage.textContent = error;
+
+      setTimeout(() => {
+        errorModal.classList.add('hidden');
+      }, 3000);
+    })
+  });
+});
 
 
 
